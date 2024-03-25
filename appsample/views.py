@@ -25,3 +25,10 @@ def execute_raw_sql(request):
         results = [ dict(zip(columns,row)) for row in cursor.fetchall()]
     return JsonResponse({"data": results})
 
+def get_item_list(request):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM appsample_item")
+        columns = [snake_to_camel(col[0]) for col in cursor.description]
+        results = [ dict(zip(columns,row)) for row in cursor.fetchall()]
+    return JsonResponse({"data": results})
+
